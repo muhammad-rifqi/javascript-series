@@ -6,7 +6,7 @@
 
 const source = document.querySelector("p");
 source.addEventListener("copy", (event) => {
-  const selection = document.getSelection();
+  const selection = document.getSelection()+"\nhttps://www.google.com\nby : ABC";
   event.clipboardData.setData("text/plain", selection.toString().toUpperCase());
   event.preventDefault();
 });
