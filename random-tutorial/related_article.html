@@ -1,0 +1,33 @@
+<div id="row"></div>
+<script>
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "https://kasir.brightnerd.site/Aplikasi-Kasir/api_detail_blog/1", true);
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            var obj = xhttp.responseText;
+            var decode = JSON.parse(obj);
+            var array = decode['data'][0].keterangan.toString().split("\n\r\n");
+            var array1 = array.slice(0, 2);
+            var array2 = array.slice(2, 2 + array.length);
+            addData(array1, array2);
+        }
+    };
+    xhttp.send();
+
+    function addData(array1, array2) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "https://kasir.brightnerd.site/Aplikasi-Kasir/api_list_blog", true);
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var obj = xhttp.responseText;
+                var decode = JSON.parse(obj);
+                var html = '';
+                for (var a = 0; a < decode['data'].length; a++) {
+                    html += '<p style="border:1px solid #000; padding:10px" align="justify">' + decode['data'][a].judul + '</p>';
+                }
+                document.getElementById("row").innerHTML = '<p align="justify">' + array1 + '<p>' + '<p>Artikel Terkait </p>' + html + '<hr>' + '<p align="justify">' + array2;
+            }
+        };
+        xhttp.send();
+    }
+</script>
